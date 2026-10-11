@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A calmer way to organize your study goals, tasks, habits, and focus time."
+    />
+    <meta name="theme-color" content="#f7f8fc" />
+    <title>Studyspace — your study, in sync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#overview" aria-label="Studyspace home">
+          <span class="brand-mark" aria-hidden="true">s.</span>
+          <span>studyspace</span>
+        </a>
+
+        <p class="nav-label">WORKSPACE</p>
+        <nav class="nav-list">
+          <a class="nav-link active" href="#overview"><span aria-hidden="true">◫</span> Overview</a>
+          <a class="nav-link" href="#tasks"><span aria-hidden="true">☷</span> My tasks</a>
+          <a class="nav-link" href="#goals"><span aria-hidden="true">◎</span> Goals & habits</a>
+          <a class="nav-link" href="#focus"><span aria-hidden="true">◷</span> Focus room</a>
+        </nav>
+
+        <div class="sidebar-note">
+          <div class="note-icon" aria-hidden="true">✳</div>
+          <p class="note-title">Small steps count.</p>
+          <p class="note-copy">A little progress each day adds up to something big.</p>
+        </div>
+
+        <div class="profile">
+          <div class="avatar" aria-hidden="true">S</div>
+          <div><strong>Student</strong><span>Your study space</span></div>
+          <span class="profile-dots" aria-hidden="true">···</span>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="today-label">YOUR STUDY SPACE</p>
+            <h1>Make today <span>count.</span></h1>
+            <p class="header-copy">A little focus goes a long way. You’ve got this.</p>
+          </div>
+          <a class="button button-primary top-add" href="#tasks"><span aria-hidden="true">＋</span> Add a task</a>
+        </header>
+
+        <section class="hero-card" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <span class="hero-kicker"><span class="sparkle" aria-hidden="true">✦</span> YOUR DAILY CHECK-IN</span>
+            <h2 id="hero-title">You don’t have to do it all.<br />Just start with <em>one thing.</em></h2>
+            <p id="daily-message">Pick a task, find your focus, and let the momentum build.</p>
+            <a class="button button-light" href="#focus">Start a focus session <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-sun"></div>
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+            <div class="art-plant">✳</div>
+            <div class="art-book"></div>
+            <div class="art-plant-small">✦</div>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Your progress at a glance">
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon lavender" aria-hidden="true">☷</span><span class="stat-label">Tasks done</span></div>
+            <div class="stat-value"><strong id="stat-tasks">0</strong><span id="stat-tasks-total">/ 0 this week</span></div>
+            <div class="mini-track"><span id="tasks-progress"></span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon peach" aria-hidden="true">◎</span><span class="stat-label">Goals in progress</span></div>
+            <div class="stat-value"><strong id="stat-goals">0</strong><span id="stat-goals-total">goals to grow</span></div>
+            <div class="mini-track peach-track"><span id="goals-progress"></span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon mint" aria-hidden="true">◷</span><span class="stat-label">Focus this week</span></div>
+            <div class="stat-value"><strong id="stat-focus">0</strong><span>minutes focused</span></div>
+            <div class="mini-track mint-track"><span id="focus-progress"></span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon yellow" aria-hidden="true">✳</span><span class="stat-label">Habits today</span></div>
+            <div class="stat-value"><strong id="stat-habits">0</strong><span id="stat-habits-total">small wins</span></div>
+            <div class="mini-track yellow-track"><span id="habits-progress"></span></div>
+          </article>
+        </section>
+
+        <div class="content-grid">
+          <section class="panel task-panel" id="tasks" aria-labelledby="tasks-heading">
+            <div class="section-heading">
+              <div><p class="eyebrow">KEEP IT MOVING</p><h2 id="tasks-heading">Your task board</h2></div>
+              <label class="filter-label">
+                <span class="sr-only">Filter tasks by category</span>
+                <select id="task-filter" class="filter-select">
+                  <option value="all">All categories</option>
+                  <option value="assignment">Assignments</option>
+                  <option value="learning">Learning</option>
+                  <option value="project">Projects</option>
+                  <option value="personal">Personal</option>
+                </select>
+              </label>
+            </div>
+            <form class="task-form" id="task-form">
+              <label class="sr-only" for="task-title">Task name</label>
+              <input id="task-title" name="title" type="text" maxlength="100" placeholder="What do you need to work on?" required />
+              <label class="sr-only" for="task-category">Task category</label>
+              <select id="task-category" name="category">
+                <option value="assignment">Assignment</option>
+                <option value="learning">Learning</option>
+                <option value="project">Project</option>
+                <option value="personal">Personal</option>
+              </select>
+              <label class="sr-only" for="task-due">Due date</label>
+              <input id="task-due" name="due" type="date" aria-label="Due date" />
+              <button class="button button-primary" type="submit">Add task</button>
+            </form>
+            <div class="board" id="task-board" aria-live="polite"></div>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel focus-panel" id="focus" aria-labelledby="focus-heading">
+              <div class="section-heading compact-heading">
+                <div><p class="eyebrow">MAKE SPACE TO THINK</p><h2 id="focus-heading">Focus room</h2></div>
+                <span class="live-dot" aria-label="Timer ready"></span>
+              </div>
+              <div class="timer-face">
+                <svg class="timer-ring" viewBox="0 0 180 180" role="img" aria-label="Focus timer">
+                  <circle class="timer-track" cx="90" cy="90" r="79"></circle>
+                  <circle class="timer-progress" id="timer-progress" cx="90" cy="90" r="79"></circle>
+                </svg>
+                <div class="timer-center">
+                  <span id="timer-mode-label">FOCUS SESSION</span>
+                  <strong id="timer-display">25:00</strong>
+                  <span id="timer-caption">One thing at a time</span>
+                </div>
+              </div>
+              <div class="timer-modes" role="group" aria-label="Choose timer mode">
+                <button class="mode-button active" type="button" data-mode="focus" aria-pressed="true">Focus</button>
+                <button class="mode-button" type="button" data-mode="short" aria-pressed="false">Short break</button>
+                <button class="mode-button" type="button" data-mode="long" aria-pressed="false">Long break</button>
+              </div>
+              <div class="timer-actions">
+                <button class="button button-primary timer-start" type="button" id="timer-toggle">Start focusing</button>
+                <button class="reset-button" type="button" id="timer-reset">Reset</button>
+              </div>
+              <p class="timer-footnote">Your focus sessions add up in your weekly progress.</p>
+            </section>
+
+            <section class="panel week-panel" aria-labelledby="week-heading">
+              <div class="section-heading compact-heading">
+                <div><p class="eyebrow">SHOWING UP ADDS UP</p><h2 id="week-heading">Your week</h2></div>
+                <span class="chart-total" id="week-total">0 min</span>
+              </div>
+              <div class="week-chart" id="week-chart" role="img" aria-label="Focus minutes over the last seven days"></div>
+            </section>
+          </aside>
+
+          <section class="panel goals-panel" id="goals" aria-labelledby="goals-heading">
+            <div class="section-heading">
+              <div><p class="eyebrow">BIG THINGS, SMALL STEPS</p><h2 id="goals-heading">Goals & habits</h2></div>
+              <span class="goal-count" id="goal-count">0 goals</span>
+            </div>
+            <form class="goal-form" id="goal-form">
+              <label class="sr-only" for="goal-title">New goal</label>
+              <input id="goal-title" name="title" type="text" maxlength="100" placeholder="Add a goal you’re working toward..." required />
+              <button class="button button-outline" type="submit"><span aria-hidden="true">＋</span> Add goal</button>
+            </form>
+            <div class="goal-list" id="goal-list" aria-live="polite"></div>
+            <div class="habit-divider"></div>
+            <div class="habit-heading"><div><span class="habit-icon" aria-hidden="true">✳</span><h3>Your daily habits</h3></div><span id="habit-date"></span></div>
+            <form class="habit-form" id="habit-form">
+              <label class="sr-only" for="habit-title">New daily habit</label>
+              <input id="habit-title" name="title" type="text" maxlength="80" placeholder="A small habit to build..." required />
+              <button class="icon-button" type="submit" aria-label="Add habit">＋</button>
+            </form>
+            <div class="habit-list" id="habit-list" aria-live="polite"></div>
+          </section>
+
+          <section class="suggestion-card" aria-labelledby="suggestion-heading">
+            <div class="suggestion-decoration" aria-hidden="true">✳</div>
+            <p class="eyebrow">A LITTLE GUIDANCE</p>
+            <h2 id="suggestion-heading">A thought for you</h2>
+            <p class="suggestion-copy" id="suggestion-copy"></p>
+            <button class="suggestion-refresh" id="suggestion-refresh" type="button"><span aria-hidden="true">↻</span> Another suggestion</button>
+            <p class="suggestion-disclaimer">Personalized study prompts, right here in your browser.</p>
+          </section>
+        </div>
+
+        <footer class="footer"><span>Made for the work you’re proud of.</span><span>Take it one step at a time <span aria-hidden="true">✿</span></span></footer>
+        <p class="sr-only" id="status-message" role="status" aria-live="polite"></p>
+      </main>
+    </div>
+  </body>
+</html>
